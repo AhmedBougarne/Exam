@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-sm bg-light navbar-light">
+    <ul class="navbar navbar-nav">
+      <li><button (click)="onGetAllVms()" class="btn btn-sm btn-outline-info ml-3">All vms</button></li>
+      <li><button (click)="" class="btn btn-sm btn-outline-info ml-3">Etat</button></li>
+      <li><button (click)="onNewVm()" class="btn btn-sm btn-outline-info ml-3">New</button></li>
+      
+
+    </ul>
+    
+</nav>
+ 
+<div class="container">
+    <ng-container *ngIf="vm$ result" [ngSwitch]="result.dataState">
+        <ng-container *ngSwitchCase="DataStateEnum.LOADING">
+           Loading ...
+        </ng-container>
+        <ng-container *ngSwitchCase="DataStateEnum.ERROR">
+            <div class="alert-danger">{{result.errorMessage}}</div>
+        </ng-container>
+        <ng-container *ngSwitchCase="DataStateEnum.LOADED">
+            <table class="table">
+                <tr>
+                    <th>Adresse IP</th><th>Name</th><th>Etat</th> 
+                </tr>
+                <tr *ngFor="let v of result.data">
+                    <td>{{v.ip}}</td>
+                    <td>{{v.name}}</td>
+                    <td>{{v.etat}}</td>
+                     
+                    <td>
+                        <button (click)="onSelect(v)"  class="btn btn-sm">
+                           <span *ngIf="v.etat">Démarrer</span>
+                           <span *ngIf="!v.etat">Arreter</span>
+                        </button>
+                    </td>
+                    
+                </tr>
+            </table>
+         </ng-container>
+         
+    </ng-container>
+     
+
+</div>
